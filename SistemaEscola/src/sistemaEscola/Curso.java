@@ -10,7 +10,7 @@ public class Curso {
     private int vagasAula;
     ProfessorTitular professorTitular;
     ProfessorAdjunto professorAdjunto;
-    List<Aluno> listaDealunos;
+    List<Aluno> listaDealunos = new ArrayList<>();
 
     public Curso(){};
     public Curso(String nomeCurso, int codCurso, int vagasAula, ProfessorTitular professorTitular, ProfessorAdjunto professorAdjunto, List<Aluno> aluno) {

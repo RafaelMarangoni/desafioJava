@@ -42,8 +42,8 @@ public class DigitalHouseManager {
         this.listaProfessor = listaProfessor;
     }
 
-    public void registrarCurso(String nomeCurso, int codCurso,int quantidadeMaximaDeAlunos){
-        Curso novoCurso = new Curso ();
+    public void registrarCurso(String nomeCurso, int codCurso, int quantidadeMaximaDeAlunos) {
+        Curso novoCurso = new Curso();
         novoCurso.setNomeCurso(nomeCurso);
         novoCurso.setCodCurso(codCurso);
         novoCurso.setVagasAula(quantidadeMaximaDeAlunos);
@@ -53,18 +53,18 @@ public class DigitalHouseManager {
 
     }
 
-    public void excluirCurso(int codigoCurso){
-        for (Curso index: this.listaCurso) {
-            if(index.getCodCurso() == codigoCurso){
+    public void excluirCurso(int codigoCurso) {
+        for (Curso index : this.listaCurso) {
+            if (index.getCodCurso() == codigoCurso) {
                 this.listaCurso.remove(index);
                 System.out.println("curso" + index.getNomeCurso() + " excluido com sucesso");
-            }else{
+            } else {
                 System.out.println("curso nao encontraado");
             }
         }
     }
 
-    public void registrarProfessorAdjunto(String nome, String sobrenome, int codigoProfessor, int quantidadeDeHoras){
+    public void registrarProfessorAdjunto(String nome, String sobrenome, int codigoProfessor, int quantidadeDeHoras) {
         ProfessorAdjunto novoProfessorAdjunto = new ProfessorAdjunto();
         novoProfessorAdjunto.setNome(nome);
         novoProfessorAdjunto.setSobreNome(sobrenome);
@@ -75,7 +75,7 @@ public class DigitalHouseManager {
         System.out.println("professor " + novoProfessorAdjunto.getNome() + "cadastrado com sucesso");
     }
 
-    public void registrarProfessorTitular(String nome, String sobrenome, int codigoProfessor, String especialidade){
+    public void registrarProfessorTitular(String nome, String sobrenome, int codigoProfessor, String especialidade) {
         ProfessorTitular novoProfessorTitular = new ProfessorTitular();
         novoProfessorTitular.setNome(nome);
         novoProfessorTitular.setSobreNome(sobrenome);
@@ -83,16 +83,17 @@ public class DigitalHouseManager {
         novoProfessorTitular.setEspecialidade(especialidade);
 
         this.listaProfessor.add(novoProfessorTitular);
+        System.out.println(listaProfessor);
         System.out.println("professor cadastrado com sucesso " + novoProfessorTitular.getNome());
     }
 
-    public void excluirProfessor(int codigoProfessor){
+    public void excluirProfessor(int codigoProfessor) {
         this.listaProfessor.removeIf(index -> index.getCodProfessor() == codigoProfessor);
         System.out.println("professor excluido com sucesso");
     }
 
-    public void matricularAluno(String nome, String sobrenome, int codigoAluno){
-        Aluno novoAluno = new Aluno(nome,sobrenome,codigoAluno);
+    public void matricularAluno(String nome, String sobrenome, int codigoAluno) {
+        Aluno novoAluno = new Aluno(nome, sobrenome, codigoAluno);
         listaAluno.add(novoAluno);
         System.out.println("aluno adicionado com sucesso");
     }
@@ -109,58 +110,61 @@ public class DigitalHouseManager {
 
             }
         }
-
         for (Aluno indexAluno : this.listaAluno) {
-            if (indexAluno.getCodAluno()== codigoAluno){
+            if (indexAluno.getCodAluno() == codigoAluno) {
                 alunoEncontrado = indexAluno;
             }
-        } if(cursoEncontrado != null && alunoEncontrado !=null){
-            if (cursoEncontrado.adicionarAluno(alunoEncontrado)){
+        }
+        if (cursoEncontrado != null && alunoEncontrado != null) {
+            if (cursoEncontrado.adicionarAluno(alunoEncontrado)) {
                 matricula = new Matricula(cursoEncontrado, alunoEncontrado);
                 listaMatricula.add(matricula);
                 System.out.println("matricula realizada com sucesso !!!");
-            }else{
+            } else {
                 System.out.println("deu ruim irmao");
             }
 
 
-        //if (this.listaCurso.get(CursoEncontrado).adicionarAluno(alunoEncontrado)) {
-//            Curso cursoDesejado = listaCurso.get(CursoEncontrado);
-//            this.listaMatricula.add(new Matricula(cursoDesejado, alunoEncontrado));
-//        }else{
-//            System.out.println("Infelizmente nao pode ser realizada.");
-//        }
         }
     }
 
-    public void alocarProfessores(Integer codigoCurso, Integer codigoProfessorTitular, Integer codigoProfessorAdjunto){
-        int cursoEncontrado = 0;
+    public void alocarProfessores(Integer codigoCurso, Integer codigoProfessorTitular, Integer codigoProfessorAdjunto) {
+        Curso curso = null;
         Professor profTitular = null;
         Professor profAdjunto = null;
 
 
-        for (Curso indexCurso: this.listaCurso) {
-            if(indexCurso.getCodCurso() == codigoCurso){
-                cursoEncontrado = this.listaCurso.indexOf(indexCurso);
-                break;
+        for (Curso indexCurso : this.listaCurso) {
+            if (indexCurso.getCodCurso() == codigoCurso) {
+                curso = indexCurso;
             }
         }
 
-        for (Professor indexProfessor : listaProfessor) {
-            if(indexProfessor.getCodProfessor() == codigoProfessorTitular){
-                profTitular =  indexProfessor;
-                this.listaCurso.get(cursoEncontrado).setProfessorTitular((ProfessorTitular)profTitular);
-                System.out.println("professor adjunto inserido com sucesso");
-            }else if(indexProfessor.getCodProfessor() == codigoProfessorAdjunto){
-                profAdjunto = indexProfessor;
-                this.listaCurso.get(cursoEncontrado).setProfessorAdjunto((ProfessorAdjunto)profAdjunto);
-                System.out.println("professor adjunto inserido com sucesso");
+        for (Professor indexProfessorTitular : listaProfessor) {
+            if (indexProfessorTitular.getCodProfessor() == codigoProfessorTitular) {
+                profTitular = indexProfessorTitular;
+
             }
+        }
+
+        for (Professor indexProfessorAdjunto : listaProfessor) {
+            if (indexProfessorAdjunto.getCodProfessor() == codigoProfessorAdjunto) {
+                profAdjunto = indexProfessorAdjunto;
+
+            }
+
+        }
+
+        if(codigoCurso!=null && codigoProfessorTitular != null){
+            curso.setProfessorTitular((ProfessorTitular) profTitular);
+            System.out.println("professor Titular alocado");
+        }
+        if(codigoCurso!= null && codigoProfessorTitular != null ){
+            curso.setProfessorAdjunto((ProfessorAdjunto) profAdjunto);
+            System.out.println("espero mesmo que tenha dado certo");
+        }else{
+            System.out.println("fudeu");
         }
 
     }
-
-
-
-
 }
